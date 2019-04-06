@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./m/lib/mui/css/mui.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 26.6667vw;
+        }
+    </style>
+</head>
+
+<body>
+    <!--下拉刷新容器 区域滚动父容器-->
+    <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+        <!-- 区域滚动子容器 -->
+        <div class="mui-scroll">
+            <!--数据列表 真实上拉和下拉的数据列表内容-->
+            <ul class="mui-table-view mui-table-view-chevron">
+
+            </ul>
+        </div>
+    </div>
+    <script src="./m/lib/mui/js/mui.js"></script>
+    <script>
+        // 初始化下拉刷新
+        mui.init({
+            pullRefresh: {
+                // 指定当前下拉刷新的父容器
+                container: '#pullrefresh',
+                // 初始化下拉刷新
+                down: {
+                    contentdown: "你正在下拉", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+                    contentover: "拉到一定程度了可以松手", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+                    contentrefresh: "正在刷新 请稍后...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+                    // 下拉刷新的回调函数 用真正的刷新数据 发送请求真实刷新数据和页面
+                    callback: pulldownRefresh
+                },
+                // 初始化上拉加载更多
+                up: {
+                    contentrefresh: '哥正在拼命加载中...',
+                    // 上拉加载的回调函数 用来真正请求更多数据 追加到页面上
+                    callback: pullupRefresh
+                }
+            }
+        });
+        /**
+         * 下拉刷新具体业务实现
+         */
+        function pulldownRefresh() {
+            setTimeout(function () {
+                var table = document.body.querySelector('.mui-table-view');
+                var cells = document.body.querySelectorAll('.mui-table-view-cell');
+                for (var i = cells.length, len = i + 3; i < len; i++) {
+                    var li = document.createElement('li');
+                    li.className = 'mui-table-view-cell';
+                    li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+                    //下拉刷新，新纪录插到最前面；
+                    table.insertBefore(li, table.firstChild);
+                }
+                // 当你的数据加载完毕后要结束下拉刷新的转圈圈
+                mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+            }, 1500);
+        }
+        var count = 0;
+        /**
+         * 上拉加载具体业务实现
+         */
+        function pullupRefresh() {
+            setTimeout(function () {
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+                var table = document.body.querySelector('.mui-table-view');
+                var cells = document.body.querySelectorAll('.mui-table-view-cell');
+                for (var i = cells.length, len = i + 20; i < len; i++) {
+                    var li = document.createElement('li');
+                    li.className = 'mui-table-view-cell';
+                    li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+                    table.appendChild(li);
+                }
+            }, 1500);
+        }
+        if (mui.os.plus) {
+            mui.plusReady(function () {
+                setTimeout(function () {
+                    mui('#pullrefresh').pullRefresh().pullupLoading();
+                }, 1000);
+
+            });
+        } else {
+            mui.ready(function () {
+                mui('#pullrefresh').pullRefresh().pullupLoading();
+            });
+        }
+
+        // 1. 下拉刷新和上拉加载更多的插件的使用
+        //     1. 引包
+        //     2. 写结构 （区域滚动一样）
+        //     3. 修改样式 （修改区域滚动样式一样 去掉相对定位 高度100%）
+        //     4. 使用js初始化下拉刷新和上拉加载
+        //         // 初始化下拉刷新
+        //         mui.init({
+        //             pullRefresh: {
+        //                 // 指定当前下拉刷新的父容器
+        //                 container: '#pullrefresh',
+        //                 // 初始化下拉刷新
+        //                 down: {
+        //                     contentdown: "你正在下拉", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+        //                     contentover: "拉到一定程度了可以松手", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+        //                     contentrefresh: "正在刷新 请稍后...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+        //                     // 下拉刷新的回调函数 用真正的刷新数据 发送请求真实刷新数据和页面
+        //                     callback: function(){
+        //                         // 请求数据刷新页面
+        //                         // 刷新完成后调用结束方法结束转圈圈
+        //                     }
+        //                 },
+        //                 // 初始化上拉加载更多
+        //                 up: {
+        //                     contentrefresh: '哥正在拼命加载中...',
+        //                     // 上拉加载的回调函数 用来真正请求更多数据 追加到页面上
+        //                     callback: function(){
+        //                         // 请求更多数据 追加页面 endPulldownToRefresh
+        //                         // 追加完成后要结束转圈圈 endPullupToRefresh
+        //                         // 结束并且提示没有数据了 endPulldownToRefresh(true)
+        //                     }
+        //                 }
+        //             }
+        //         });
+    </script>
+</body>
+
+</html>

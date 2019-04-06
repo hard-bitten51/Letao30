@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    1. 完成分类页面布局
+        头和底和主页差不多使用base公共样式
+        把标题替换成表单即可
+        去掉表单默认底部间距 文字居左
+        分类主体部分也是左右布局
+        左边固定宽度 里面使用MUI提供列表的组件
+        右边flex:1  里面使用栅格系统 
+    2. 动态渲染数据
+        1. ajax 请求数据 使用zepto提供$.ajax函数即可 和jq一样
+        2. 处理数据 渲染成模板html 使用模板引擎
+            artTemplate  原生  简洁 简洁-web
+            推荐使用简洁-web的
+        3. 引包引入 template-web的包
+        4. 创建模板 id type
+            模板语法
+            表达式{{变量 或者 属性}}
+            {{if}} {{/if}}
+            {{if}} {{else}} {{/if}}
+            {{each 数组名 value i}}
+            {{/each}}
+        5. 调用模板 使用template函数 第一个传人模板id 第二个是数据对象（如果不是对象就包在一个对象）
+</body>
+</html>

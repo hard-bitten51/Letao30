@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./public/m/lib/mui/css/mui.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 26.6667vw;
+        }
+
+        /* 需要滑动要保持上中下的结构 页面不能出现滚动条
+        上 + 中 + 下 刚好和屏幕一样 */
+        /* 使用上下固定定位在头部和底部
+        中间设置padding把内容挤到中间 */
+        #header {
+            height: 45px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #0f0;
+        }
+
+        #main {
+            height: 100vh;
+            padding: 45px 0;            
+        }
+
+        /* 因为main里面区域滚动是绝对定位 不会受到父元素padding的影响把绝对定位改成相对定位 */
+        .mui-scroll-wrapper {
+            /* 因为mui默认是绝对定位 改成相对定位 */
+            position: relative;
+            /* 固定高度和main的高度一样 */
+            height: 100%;
+        }
+
+        #footer {
+            height: 45px;
+            width: 100%;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            background-color: #00f;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header"></header>
+    <main id="main">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <!--这里放置真实显示的DOM内容-->
+                <ul>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                    <li>这是中间需要滚动的内容</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer id="footer"></footer>
+    <script src="./public/m/lib/mui/js/mui.js"></script>
+    <script>
+        mui('.mui-scroll-wrapper').scroll({
+            deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+        });
+    </script>
+</body>
+
+</html>

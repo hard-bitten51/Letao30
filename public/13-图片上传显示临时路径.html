@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <div class="ge_pic_icon_Infor">
+        <img src="images/moren.jpg" />
+    </div>
+    <div class="Infor_file">
+        <input type="file" name="uploadPicture" id="file" value="" title="上传照片" onchange="getPhoto(this)" />
+    </div>
+    <script src="./admin/lib/jquery/jquery.js"></script>
+    <script type="text/javascript">
+        var imgurl = "";
+        var cd = document.getElementById("file");
+
+        function getPhoto(node) {
+            console.dir(node)
+
+            var imgURL = "";
+            try {
+                var file = null;
+                if (node.files && node.files[0]) {
+                    file = node.files[0];
+                    console.dir(file);
+
+                } else if (node.files && node.files.item(0)) {
+                    file = node.files.item(0);
+
+                }
+                //Firefox 因安全性问题已无法直接通过input[file].value 获取完整的文件路径
+                try {
+                    imgURL = file.getAsDataURL();
+                    console.log(imgURL)
+
+                } catch (e) {
+                    console.log(e);
+                    imgRUL = window.URL.createObjectURL(file); //好像这一步比较重要
+                    console.log(imgRUL);
+
+                }
+            } catch (e) {
+                console.log(e);
+                if (node.files && node.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        imgURL = e.target.result;
+                    };
+                    reader.readAsDataURL(node.files[0]);
+                }
+            }
+            creatImg(imgRUL);
+            return imgURL;
+        }
+
+        function creatImg(imgRUL) {
+            var textHtml = "<img src='" + imgRUL + "'width='414px' height='600px'/>";
+            $(".ge_pic_icon_Infor").html(textHtml);
+        }
+    </script>
+</body>
+
+</html>

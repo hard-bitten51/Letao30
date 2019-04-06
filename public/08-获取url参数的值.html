@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 当前是被跳转到的页面 需要获取上一个页面跳转到我当前页面url中传递过来参数的值
+        /* 08-获取url参数的值.html?search=鞋&time=1213131231
+        拿到当前参数的中鞋
+        根据参数名search去拿鞋     */
+        /* 1. 如何取值
+            1. 知道你的值是在哪个参数名上(参数可能有很多个)
+            2. 根据参数名来取值
+        2. 要求在当前url中 08-获取url参数的值.html?search=鞋&time=1213131231  取出鞋
+            1. 根据鞋参数名 search参数名 (参数名是上一个页面传过来的时候指定的)
+            2. 取出search对应值 就是鞋
+        3. 步骤
+            1. 先获取整个url参数但是参数中带了一个问号去掉问号
+                ?search=鞋&time=1213131231
+            2. 再把剩下的参数 按照&符合分割 search=%E9%9E%8B&time=1213131231
+                [search=鞋,time=1213131231]
+            3. 遍历数组 判断参数名如果一直获取对应值
+                if(arr[i].split('=')[0] == "参数名"){
+                    arr[i].split('=')[1]
+                }
+            */
+        // 1. params字符串就是整个url参数字符串 去掉了？号
+        var params = location.search.substr(1);
+        // console.log(params);
+        // 2. 里面有多个参数所以使用&符合分割成数组
+        params = params.split('&');
+        // console.log(params);
+        // 3. 遍历数组根据参数名 找值
+        for(var i = 0 ; i < params.length ; i ++){
+            // 4. 每一个参数 params[i]
+            // console.log(params[i]);
+            // 5. 每个参数search=鞋  或者 time=1213131231 都是按照=号分割
+            var paramsName = params[i].split('=')[0];
+            // console.log(paramsName);
+            var paramsValue = params[i].split('=')[1];
+            // console.log(paramsValue);
+            // if(paramsName == "search"){
+            //     console.log(paramsValue);
+            // }
+            if(params[i].split('=')[0] == 'search'){
+                // 如果默认encodeURI加密 使用 decodeURI解密
+                console.log(decodeURI(params[i].split('=')[1]));
+                // 如果 自己使用escape加密 使用 unescape解密
+                // console.log(unescape(params[i].split('=')[1]));
+            }
+        }
+    </script>
+</body>
+</html>

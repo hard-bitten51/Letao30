@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background: #111;
+        }
+
+        canvas {
+            margin: 50px auto;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background-color: black;
+        }
+
+        .loader {
+            width: 20em;
+            height: 20em;
+            font-size: 10px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 100px auto;
+        }
+
+        .loader .face {
+            position: absolute;
+            border-radius: 50%;
+            border-style: solid;
+            animation: animate 3s linear infinite;
+        }
+
+        .loader .face:nth-child(1) {
+            width: 100%;
+            height: 100%;
+            color: gold;
+            border-color: currentColor transparent transparent currentColor;
+            border-width: 0.2em 0.2em 0em 0em;
+            --deg: -45deg;
+            animation-direction: normal;
+        }
+
+        .loader .face:nth-child(2) {
+            width: 70%;
+            height: 70%;
+            color: lime;
+            border-color: currentColor currentColor transparent transparent;
+            border-width: 0.2em 0em 0em 0.2em;
+            --deg: -135deg;
+            animation-direction: reverse;
+        }
+
+        .loader .face .circle {
+            position: absolute;
+            width: 50%;
+            height: 0.1em;
+            top: 50%;
+            left: 50%;
+            background-color: transparent;
+            transform: rotate(var(--deg));
+            transform-origin: left;
+        }
+
+        .loader .face .circle::before {
+            position: absolute;
+            top: -0.5em;
+            right: -0.5em;
+            content: '';
+            width: 1em;
+            height: 1em;
+            background-color: currentColor;
+            border-radius: 50%;
+            box-shadow: 0 0 2em,
+                0 0 4em,
+                0 0 6em,
+                0 0 8em,
+                0 0 10em,
+                0 0 0 0.5em rgba(255, 255, 0, 0.1);
+        }
+
+        @keyframes animate {
+            to {
+                transform: rotate(1turn);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1.先有一个动画 
+        1. 可以动图 gif图片
+        2. 使用CSS3 动画效果来自己做一个动图
+    2. 在发送请求之前要显示动画
+    3. 发送请求之后要隐藏动画 -->
+    <img src="./m/images/loading1.gif" alt="">
+    <div></div>
+    <div class="loader">
+        <div class="face">
+            <div class="circle"></div>
+        </div>
+        <div class="face">
+            <div class="circle"></div>
+        </div>
+    </div>
+
+
+    <script>
+        var $ = {};
+
+        $.Particle = function (opt) {
+            this.radius = 7;
+            this.x = opt.x;
+            this.y = opt.y;
+            this.angle = opt.angle;
+            this.speed = opt.speed;
+            this.accel = opt.accel;
+            this.decay = 0.01;
+            this.life = 1;
+        };
+
+        $.Particle.prototype.step = function (i) {
+            this.speed += this.accel;
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed;
+            this.angle += $.PI / 64;
+            this.accel *= 1.01;
+            this.life -= this.decay;
+
+            if (this.life <= 0) {
+                $.particles.splice(i, 1);
+            }
+        };
+
+        $.Particle.prototype.draw = function (i) {
+            $.ctx.fillStyle = $.ctx.strokeStyle = 'hsla(' + ($.tick + (this.life * 120)) + ', 100%, 60%, ' + this.life +
+                ')';
+            $.ctx.beginPath();
+            if ($.particles[i - 1]) {
+                $.ctx.moveTo(this.x, this.y);
+                $.ctx.lineTo($.particles[i - 1].x, $.particles[i - 1].y);
+            }
+            $.ctx.stroke();
+
+            $.ctx.beginPath();
+            $.ctx.arc(this.x, this.y, Math.max(0.001, this.life * this.radius), 0, $.TWO_PI);
+            $.ctx.fill();
+
+            var size = Math.random() * 1.25;
+            $.ctx.fillRect(~~(this.x + ((Math.random() - 0.5) * 35) * this.life), ~~(this.y + ((Math.random() - 0.5) *
+                35) * this.life), size, size);
+        }
+
+        $.step = function () {
+            $.particles.push(new $.Particle({
+                x: $.width / 2 + Math.cos($.tick / 20) * $.min / 2,
+                y: $.height / 2 + Math.sin($.tick / 20) * $.min / 2,
+                angle: $.globalRotation + $.globalAngle,
+                speed: 0,
+                accel: 0.01
+            }));
+
+            $.particles.forEach(function (elem, index) {
+                elem.step(index);
+            });
+
+            $.globalRotation += $.PI / 6;
+            $.globalAngle += $.PI / 6;
+        };
+
+        $.draw = function () {
+            $.ctx.clearRect(0, 0, $.width, $.height);
+
+            $.particles.forEach(function (elem, index) {
+                elem.draw(index);
+            });
+        };
+
+        $.init = function () {
+            $.canvas = document.createElement('canvas');
+            $.ctx = $.canvas.getContext('2d');
+            $.width = 300;
+            $.height = 300;
+            $.canvas.width = $.width * window.devicePixelRatio;
+            $.canvas.height = $.height * window.devicePixelRatio;
+            $.canvas.style.width = $.width + 'px';
+            $.canvas.style.height = $.height + 'px';
+            $.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            $.min = $.width * 0.5;
+            $.particles = [];
+            $.globalAngle = 0;
+            $.globalRotation = 0;
+            $.tick = 0;
+            $.PI = Math.PI;
+            $.TWO_PI = $.PI * 2;
+            $.ctx.globalCompositeOperation = 'lighter';
+            document.body.appendChild($.canvas);
+            $.loop();
+        };
+
+        $.loop = function () {
+            requestAnimationFrame($.loop);
+            $.step();
+            $.draw();
+            $.tick++;
+        };
+
+        $.init();
+    </script>
+
+</body>
+
+</html>

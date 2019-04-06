@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div></div>
+    <!-- 需要渲染模板使用模板引擎 -->
+    <!-- 1. 引包引入模板引擎 -->
+    <!-- <script src="./m/lib/artTemplate/template-native.js"></script> -->
+     <!--  原生模板引擎 -->
+    <!-- 2. 创建模板  模板引擎一定要指定id 和 类型非js-->
+    <script id="tpl" type="text/html">       
+       <%=arr%>
+       <!-- 数组是什么for里面就是什么 -->
+        <%for (var i=0;i<arr.length;i++) {%>
+                <h1><%=i%>. <%=arr[i]%></h1>
+        <%}%>
+    </script>
+    <!-- <script src="./m/lib/artTemplate/template.js"></script> -->
+    <!-- 模板引擎的简洁语法 (旧版本的) -->
+    <script id="tplJJ" type="text/html">
+        <!-- each 数组是什么就each什么 -->
+        {{each arr as value i}}
+        <!-- $index默认索引 循环的索引从0开始
+        $value循环的每个值 就是数组里面的每个值 -->
+        <!-- <h1>{{$index}}. {{$value}}</h1> -->
+        <!-- 如果把默认值改成了value i 使用 i就是索引  value就是值 -->
+        <h1>{{i}}. {{value}}</h1>
+        {{/each}}
+        
+    </script>
+    <!-- 最新版模板简洁语法的模板引擎 -->
+    <script src="./m/lib/artTemplate/template-web.js"></script>
+    <!-- 模板引擎的简洁语法新版本 新版本的语法和旧版本就少了一个as -->
+    <script id="tplJJNew" type="text/html">
+        <!-- each 数组是什么就each什么 -->
+        {{each arr value i}}
+        <!-- $index默认索引 循环的索引从0开始
+        $value循环的每个值 就是数组里面的每个值 -->
+        <!-- <h1>{{$index}}. {{$value}}</h1> -->
+        <!-- 如果把默认值改成了value i 使用 i就是索引  value就是值 -->
+        <h1>{{i}}. {{value}}</h1>
+        {{/each}}
+        {{student.name}}
+    </script>
+    <!-- 使用jq 或者 zepto的 $.ajax发送请求 -->
+    <script src="./m/lib/zepto/zepto.min.js"></script>
+    <script>
+        // type dateType 可以省略不写 默认get 和 json
+        $.ajax({
+            url: 'http://localhost:3000/category/queryTopCategory', // 请求地址
+            success: function (data) { // 请求成功的回调函数
+                console.log(data);
+            }
+        });
+
+        // 3. 调用模板引擎 template函数第一个是模板id 第二个是数据(必须是对象格式)
+        // var html = template('tpl',{num:10});
+        // var html = template('tpl', {
+        //     arr: [1, 2, 3, 4, 5]
+        // });
+        // var html = template('tplJJ', {
+        //     arr: [1, 2, 3, 4, 5, 6]
+        // });
+        var data = {
+            arr: [1, 2, 3, 4, 5, 6],
+            student:{name:'张三'}
+        };
+        var html = template('tplJJNew', data);
+
+        console.log(html);
+        // 4. 把生成模板渲染到页面上
+        $('div').html(html);
+
+
+        // 总结模板引擎
+        //     1. 引包 （写那个语法导入哪个包） 建议使用template-web 最新版
+        //     2. 创建一个模板语法 script 指定id 和 type
+        //     3. 调用模板的函数 template函数 第一个参数模板id 第二个参数模板对象 (如果不是对象要包在对象里面)
+        //     4. 把模板生成html渲染到页面即可
+
+        function fun(obj) {
+            console.log(obj);
+
+        }
+
+        fun(data);
+        fun({
+            arr: [1, 2, 3, 4, 5, 6]
+        })
+    </script>
+</body>
+
+</html>

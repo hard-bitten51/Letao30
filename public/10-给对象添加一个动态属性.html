@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        iframe{
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 我这个页面想要百度在我这 -->
+    <iframe src="https://www.taobao.com/" frameborder="0"></iframe>
+    <script>
+        var arr = ['zhouxingchi', '周星驰', 'liudehua', '刘德华', 'xuezhiqian', '薛之谦']
+        var obj = {
+            zhangsan: '张三',
+            lisi: '李四',
+            wangwu: '王五',
+            laowang: '老王',
+            lcc: '龙程畅' 
+                 
+        };
+        // 把数组arr里面的名字拼音和汉字分别添加到obj对象中
+        // 数组有6个 对象只要加3个 循环添加 只能循环3次 或者 只有遇到拼音（偶数才给对象加）
+        for(var i = 0 ; i < arr.length / 2 ; i ++){
+            console.log(arr[i*2]);// 每个键
+            console.log(arr[i*2+1]);// 每个键对应的值
+            // 如果对象添加属性 为变量 不能使用 .语法
+            // obj.arr[i*2] =  arr[i*2+1];
+            // 如果键是一个变量只能使用空括号给对象加键
+            obj[arr[i*2]] = arr[i*2+1];
+        }
+        console.log(obj);
+
+
+
+        
+    </script>
+</body>
+
+</html>

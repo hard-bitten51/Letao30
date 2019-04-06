@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 函数名叫查询字符串  根据url参数名 查询url参数的值
+        // function getQueryString(name) {
+        //     // 1. 获取参数转成数组
+        //     var params = location.search.substr(1).split('&');
+        //     // 2. 遍历所有参数
+        //     for (var i = 0; i < params.length; i++) {
+        //         // 3. 判断每个参数的参数名 是否和当前传来 的参数名一致
+        //         if (params[i].split('=')[0] == name) {
+        //             // 4. 如果一直把当前参数名对应的参数值返回
+        //             return params[i].split('=')[1];
+        //         }
+        //     }
+        //     return '';
+        // }
+
+        function getQueryString(name) {
+            var reg = new RegExp("[^\?&]?" + encodeURI(name) + "=[^&]+");
+            var arr = location.search.match(reg);
+            if (arr != null) {
+                // return decodeURI(arr[0].split('=')[1]);
+                return decodeURI(arr[0].substr(str.indexOf('=')+1));
+            }
+            return "";
+        }
+        // 如果想获取search参数的值传人search
+        console.log(getQueryString('search'));
+        // 如果想获取time参数的值 传人time
+        // console.log(getQueryString('time'));
+
+        // var str = "search=鞋&time=1213131231"
+        // console.log(str.match(/[^?&]?time=[^&]+/))
+
+    </script>
+</body>
+
+</html>

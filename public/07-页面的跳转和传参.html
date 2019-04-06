@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="08-获取url参数的值.html">a跳转</a>
+    <button>按钮跳转</button>
+    <div>按钮跳转</div>
+    <script>
+        var button = document.querySelector('div');
+        button.addEventListener('click', function () {
+            // 默认 使用encodeURI 加密中文 还可以使用escape加密
+            location = '08-获取url参数的值.html?search=鞋&time=1213131231';
+            // location = '08-获取url参数的值.html?search='+encodeURI('鞋')+'&time=1213131231';
+            // location = '08-获取url参数的值.html?search='+escape('鞋')+'&time=1213131231';
+        });
+        /* 跳转页面还可以传参数
+            1. 什么时候需要传参数 ： 下一个页面需要依赖上一个页面的值的时候才需要传参
+            2. 怎么传参: 在url后面拼接一个参数 06-本地存储的使用.html?参数名=参数的值
+                08-获取url参数的值.html?search=鞋  search就是参数名 鞋参数的值 
+                如果有多个参数使用&符合隔开
+                08-获取url参数的值.html?search=鞋&time=1213131231 */
+    </script>
+</body>
+
+</html>

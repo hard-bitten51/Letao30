@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 1. 如果需要永久存放一些数据就需要使用localStorage 只要用户不手动清除缓存浏览器记录都会一直存在
+         2. 搜索历史需要永久存放的除非用户手动删除 -->
+    <script>
+        // localStorage.abc = 123;
+        // console.log(localStorage);
+        // localStorage是一个对象 所有本地存储的记录保存到当前对象属性上
+        //     属性不能重复 
+        //     操作使用键 值操作 键不能重复
+        // localStorage.getItem('键') 根据键取值
+        // localStorage.setItem('键',值) 根据键设置值
+        // localStorage.removeItem('键') 删除一个键和值
+        // localStorage.clear() 清空所有键和值
+        // 注意默认本地存储只支持基本数据类型 number bool string 等简单类型的数据
+        // arr数组 object function 等复杂类型都不支持
+        localStorage.setItem('searchHistory', '鞋')
+        // 如果想要存储复杂类型的如数组 对象 转成json字符串来存储
+        var arr = [{
+            'query': '鞋',
+            time: new Date().getTime()
+        }, {
+            'query': '包',
+            time: new Date().getTime()
+        }];
+        console.log(arr);
+        // 如果arr是数组调用JSON.stringify(arr) 转出json字符串 把字符串存进去
+        var str = JSON.stringify(arr);
+        localStorage.setItem('searchHistory', str)
+        // 取出来也是一个字符串
+        var str1 = localStorage.getItem('searchHistory');
+        console.log(str1);
+        //取出来之后使用数组操作 把字符串又转成数组
+        str1 = JSON.parse(str1);
+        console.log(str1);
+        console.log(str1[0]);
+    </script>
+</body>
+
+</html>
