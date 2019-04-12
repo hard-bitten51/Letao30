@@ -1,51 +1,63 @@
 @import 'base.less';
 
-/* 商品列表的主体样式 */
+/* 主体区域样式 */
 #main {
     .product-list {
-
-        // 卡片标题
         .mui-card-header {
-
             a {
-                font-size: .14rem;
                 color: #666;
-                text-align: center;
+                font-size: .14rem;
 
                 &.active {
                     color: red;
                 }
             }
-
         }
 
-        // 卡片内容
         .mui-card-content {
-            .mui-col-xs-6 {
-                // 所有盒子下面有阴影
-                box-shadow: 0 1px 0 #ccc;
+            .mui-row {
+                >div {
 
-                &:nth-child(odd) {
-                    // 右边的盒子左边和下面都要阴影
-                    // border-left: 1px solid #ccc;
-                    box-shadow: 1px 1px 0 #ccc;
-                }
-            }
+                    &:nth-child(odd) {
+                        padding-right: .05rem;
+                    }
 
-            .product {
-                text-align: center;
-                padding: .1rem .05rem;
+                    &:nth-child(even) {
+                        padding-left: .05rem;
+                    }
 
-                .product-img {
-                    width: 100%;
-                }
+                    .product {
+                        border: 1px solid #ccc;
+                        text-align: center;
+                        margin-top: .1rem;
+                        padding-bottom: .1rem;
 
-                .product-name {
-                    overflow: hidden; // 隐藏溢出部分
-                    text-overflow: ellipsis; //溢出用省略号显示
-                    display: -webkit-box; //将对象作为弹性伸缩盒子模型显示
-                    -webkit-box-orient: vertical; //从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）
-                    -webkit-line-clamp: 2; //这个属性不是css的规范属性，需要组合上面两个属性，表示显示的行数。
+                        .product-img {
+                            width: 100%;
+                        }
+
+                        .product-name {
+                            line-height: .18rem;
+                            // 只能显示2行或者3行超出要隐藏
+                            // height: .36rem;
+                            // overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 2;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+
+                        .product-price {
+                            span {
+                                color: red;
+                            }
+
+                            del {
+                                color: #ccc;
+                            }
+                        }
+                    }
                 }
             }
         }

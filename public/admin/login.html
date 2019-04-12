@@ -1,12 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>自写后台系统登录页</title>
+    <title>后台登录</title>
+    <!-- 1.引入bootstrap.css -->
+    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.css">
+    <!-- 2. 引入登录页面自己的css -->
+    <link rel="stylesheet" href="./less/login.css">
 </head>
+
 <body>
-    这是我自己写的PC端后台管理登录登录页面
+    <form class="form-horizontal">
+        <img src="./images/my_logo.jpg" alt="" class="logo">
+        <div class="form-group">
+            <label for="inputEmail3" class="col-xs-2 control-label">用户名</label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control username" id="inputEmail3" value="root" placeholder="请输入用户名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-xs-2 control-label">密码</label>
+            <div class="col-xs-10">
+                <input type="password" class="form-control password" id="inputPassword3" value="123456" placeholder="请输入密码">
+            </div>
+        </div>        
+        <div class="form-group">
+            <div class="col-xs-12">
+                <!-- 默认submit会触发表单提交 尽量改成普通按钮 -->
+                <button type="button" class="btn btn-default btn-block btn-login">登录</button>
+            </div>
+        </div>
+    </form>
+    <!-- 1. 引入jquery -->
+    <script src="./lib/jquery/jquery.js"></script>
+    <!-- 2. 引入bootstrap的js -->
+    <script src="./lib/bootstrap/js/bootstrap.js"></script>
+    <script src="./js/login.js"></script>
 </body>
+
 </html>

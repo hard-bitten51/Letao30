@@ -1,104 +1,112 @@
 @import 'base.less';
 
-/* 购物车主体商品的样式 */
+/* 主体区域的样式 */
 #main {
-    // 因为这个购物车页面底部多了一个订单区域底部在往上挤一点
-    padding-bottom: .9rem;
+
+    /* 购物车列表的样式 */
     .cart-list {
-        li {
-            a {
-                display: flex;
 
-                .left {
-                    width: 0.8rem;
+        // 每个列表的商品
+        .product {
+
+            // 商品的左边的样式
+            .mui-pull-left {
+
+                // 左边的图片
+                img {
+                    max-width: .8rem;
+                    height: .6rem;
+                }
+
+                // 复选框的容器
+                .mui-checkbox {
                     text-align: center;
-                    position: relative;
+                    margin-top: .1rem;
 
-                    img {
-                        width: 100%;
-                        display: block;
-                    }
-
-                    .mui-checkbox {
+                    // 左边的复选框
+                    input[type='checkbox'] {
                         position: static;
 
-                        // 设置复选框里面的输入框定位值 水平居中 垂直居底部
-                        // 子绝父相相对mui-checkbox的元素 但是父元素没高度 left有高
-                        // 让input去参照left 把 mui-checkbox的定位取消
-                        // 默认如果有top 和 bottom 生效top  把top取消
-                        input {
-                            left: 50%;
-                            transform: translateX(-50%);
-                            top: auto;
-                            bottom: 0rem;
-                            &::before{
-                                color:hotpink;
-                            }
+                        &::before {
+                            // 这是一个图片使用字体大小修改图标大小
+                            font-size: .24rem;
                         }
-                    }
-
-                }
-
-                .right {
-                    flex: 1;
-                    line-height: .24rem;
-                    .product-name{
-                        color:#666;
-                      
-                    }
-                    .product-price{
-                        color:#666;
-                        
-                        span{
-                            color:red;
-                            font-weight: 600;
-                        }
-                    }
-                    .product-params{
-                        display: flex;
-                        justify-content: space-between;
                     }
                 }
 
-                // a排除 .mui-btn 都会添加这个样式
-                &:not(.mui-btn) {
-                    // 是否允许内容换行 默认是nomarl 不设置 nowrap 强制不换行
+            }
+
+            // 商品的右边的样式
+            .mui-media-body {
+
+                // 商品名称的样式 默认MUI设置强制不换行 要取消
+                .product-name {
                     white-space: normal;
+                    line-height: .24rem;
+                    color: #666;
+                }
+
+                // 商品价格
+                .product-price {
+                    line-height: .24rem;
+
+                    span {
+                        color: red;
+                        font-weight: 600;
+                    }
+
+                    del {
+                        color: #ccc;
+                    }
+                }
+
+                // 商品的参数 尺码 数量
+                .product-params {
+                    display: flex;
+                    justify-content: space-between;
+                    line-height: .24rem;
                 }
             }
         }
 
+        .mui-table-view-cell:after {
+            left: 0;
+        }
     }
 }
 
-/* 购物车订单区域的样式 */
-#order{
-    position: fixed;
-    bottom: .45rem;
-    height: .45rem;
-    width: 100%;
-    line-height: .4rem;
-    display: flex;    
+/* 订单区域的样式 */
+#order {
+    display: flex;
     justify-content: space-between;
-    padding: .05rem;
+    line-height: .34rem;
     background-color: #fff;
-    .order-count{
-        color:red;
+    border-top: 1px solid #ccc;
+
+    .order-count {
+        padding-left: .2rem;
+        color: red;
+        font-weight: 600;
     }
-    
 }
 
-// 去掉弹出框间距
-.mui-popup-inner{
-    padding: 0.15rem 0;
-    .product-size{
-        
-        span{
-            line-height: .33rem;
-        }
-        button{
-            // margin-top: .05rem;
-            margin-bottom: 0.05rem;
+
+// 修改编辑框里面的样式
+.mui-popup{
+    .product-size {
+        line-height: .34rem;
+        text-align: left;
+        .btn-size {
+            margin-bottom: .05rem;
         }
     }
+    .mui-table-view-cell{
+        padding: .11rem 0;
+       
+    }
+    .mui-table-view-cell:after {
+        left: 0;
+        background-color: #ccc;
+    }
 }
+

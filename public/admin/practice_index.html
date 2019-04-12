@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>后台主页</title>
+    <!-- 1.引入bootstrap.css -->
+    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.css">
+    <!-- 2. 引入主页页面自己的css -->
+    <link rel="stylesheet" href="./less/practice_index.css">
+</head>
+<body>
+    <main id="main">
+          <!-- 左侧边栏 -->
+        <div class="left">
+                <!-- 左侧头像 -->
+                <div class="logo">
+                    <img src="./images/4.png" alt="">
+                    <p>小姐姐</p>
+                </div>
+                <!-- 左侧列表组 -->
+                <div class="list-group">
+                    <a href="#" class="list-group-item active ">
+                        用户管理
+                    </a>
+                    <!-- 给你要点击的a添加 这2个属性 注意a本身有一个href删掉之前href -->
+                    <!-- href="#collapseExample" 关联要切换的内容id选择器 -->
+                    <a class="list-group-item " data-toggle="collapse" href="#collapseExample">分类管理</a>
+                    <!-- 不能把内容包裹在a标签里面 因为a不能包含a -->
+                    <!-- collapse控制显示隐藏   collapse表示隐藏  collapse in 表示显示 -->
+                    <div class="collapse in" id="collapseExample">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item ">
+                                一级分类
+                            </a>
+                            <a href="#" class="list-group-item ">
+                                二级分类
+                            </a>
+                        </div>
+                    </div>
+                    <a href="#" class="list-group-item">商品管理</a>
+                </div>
+        </div>
+        <!-- 右侧部分 -->
+        <div class="right">
+                <!-- 右侧的头部 -->
+                <header id="header">
+                    <a href="#" class="glyphicon glyphicon-th-list"></a>
+                    <a href="#" class="glyphicon glyphicon-off exit">退出</a>
+                </header>
+                <!-- 表格内容 -->
+                <section id="info">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>用户名</th>
+                                <th>手机号</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>itcast</td>
+                                <td>11333333</td>
+                                <td>已启用</td>
+                                <td><button type="button" class="btn btn-danger">禁用</button></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>itcast</td>
+                                <td>11333333</td>
+                                <td>已启用</td>
+                                <td><button type="button" class="btn btn-danger">禁用</button></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>itcast</td>
+                                <td>11333333</td>
+                                <td>已启用</td>
+                                <td><button type="button" class="btn btn-danger">禁用</button></td>
+                            </tr>
+    
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+    </main>
+    <script id="userTpl" type="text/html">
+        {{each rows value}}
+        <tr>
+            <th scope="row">{{value.id}}</th>
+            <td>{{value.username}}</td>
+            <td>{{value.mobile}}</td>
+            <!-- 判断value.isDelete的值来判断 ==0表示已禁用 -->
+            {{if value.isDelete == 0}}
+            <td>已禁用</td>
+            <td><button type="button" class="btn btn-success">禁用</button></td>
+            {{else}}
+            <td>已启用</td>
+            <td><button type="button" class="btn btn-danger">禁用</button></td>
+            {{/if}}
+            
+        </tr>
+        {{/each}}
+    </script>
+</body>
+<!-- 1. 引入jquery -->
+<script src="./lib/jquery/jquery.js"></script>
+<!-- 2. 引入bootstrap的js -->
+<script src="./lib/bootstrap/js/bootstrap.js"></script>
+<!-- 3. 引入模板引擎的包  注意引入template-web.js文件-->
+<script src="./lib/artTemplate/template-web.js"></script>
+<script src="./js/practice_index.js"></script>
+</html>

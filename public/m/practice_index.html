@@ -27,6 +27,8 @@
                 <!--这里放置真实显示的DOM内容-->
                 <!-- 轮播图部分 -->
         <div class="mui-scroll-wrapper">
+            <!-- 区域滚动的子容器  -->
+            <div class="mui-scroll">
             <!-- 引入MUI轮播图文档 -->
             <div class="mui-slider">
                 <div class="mui-slider-group mui-slider-loop">
@@ -116,31 +118,23 @@
                         <div class="mui-row">
                             <div class="mui-col-xs-6">
                                 <a href="#">
-                                    <img src="http://134.175.175.137:80/picture//website/ff80808157ffc1c2015800534d4c0000/2017/0073a2aafb8d430c81cfb1e18ae0144b.jpg"
-                                        alt="">
+                                    <img src="./images/active1.png" alt="">
                                 </a>
-
                             </div>
                             <div class="mui-col-xs-6">
                                 <a href="#">
-                                    <img src="http://134.175.175.137:80/picture//website/ff80808157ffc1c2015800534d4c0000/2017/a9c7f59e3d3b4c368698a9e3f8b53381.jpg"
-                                        alt="">
+                                    <img src="./images/active2.png" alt="">
                                 </a>
-
                             </div>
                             <div class="mui-col-xs-6">
                                 <a href="#">
-                                    <img src="http://134.175.175.137:80/picture//website/ff80808157ffc1c2015800534d4c0000/2017/0073a2aafb8d430c81cfb1e18ae0144b.jpg"
-                                        alt="">
+                                    <img src="./images/active4.png" alt="">
                                 </a>
-
                             </div>
                             <div class="mui-col-xs-6">
                                 <a href="#">
-                                    <img src="http://134.175.175.137:80/picture//website/ff80808157ffc1c2015800534d4c0000/2017/a9c7f59e3d3b4c368698a9e3f8b53381.jpg"
-                                        alt="">
+                                    <img src="./images/active5.png" alt="">
                                 </a>
-
                             </div>
                         </div>
                     </div>
@@ -220,11 +214,40 @@
                     </div>
                 </section>
         </div>
-            
+        </div> 
            
         
-    </main>
-    <footer id="footer"></footer>
+    </main> 
+    <footer id="footer">
+        <!-- mui的栅格和bootstrap一样也是行和列组成 一行最多12列 只有2中屏幕 xs  和 sm  行不需要放容器
+        列 必须放行里面 -->
+        <div class="mui-row">
+                <div class="mui-col-xs-3">
+                    <a href="practice_index.html" class="active">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                </div>
+                <div class="mui-col-xs-3">
+                    <a href="practice_category.html">
+                        <i class="fa fa-bars"></i>
+                        <span>分类</span>
+                    </a>
+                </div>
+                <div class="mui-col-xs-3">
+                    <a href="practice_cart.html">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>购物车</span>
+                    </a>
+                </div>
+                <div class="mui-col-xs-3">
+                    <a href="practice_user.html">
+                        <i class="fa fa-user"></i>
+                        <span>个人中心</span>
+                    </a>
+                </div>
+            </div>
+    </footer>
 </body>
 <!-- 引入MUI的JS文件 -->
 <script src="./lib/mui/js/mui.js"></script>
@@ -235,5 +258,5 @@
 <!-- 引入swiper的js -->
 <script src="./lib/swiper/js/swiper.js"></script>
 <!-- 引入自己手写的js文件 -->
-<script src="./js/practice_index.js"></script>
+<script src="./js/index.js"></script>
 </html>

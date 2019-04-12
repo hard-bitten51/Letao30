@@ -1,267 +1,225 @@
-// 定义了一个全局变量 当前搜索的商品名称 每次改了都重新变化这个商品名称
-var proName = '';
-
 $(function () {
-    // 页面刚加载调用当前查询商品的函数
-    queryProduct();
-    // 调用当前商品搜索页面的搜索功能
+    // 把搜索关键字作为全局变量 因为搜索关键很多函数都需要用 全局变量尽量放在最前面
+    var search;
+    // 默认请求第一页
+    var page = 1;
+    //   1. 在商品列表页面根据地址栏参数获取当前搜索的关键字  获取中文可能是一个乱码必须解码才能使用
+    // 如果参数只有一个才可以使用 只要参数多了就无法使用了
+    // var search = decodeURI(location.search.split('=')[1]);
+
+    // 调用搜索商品的函数
     searchProduct();
-    // 调用商品排序功能
+    // 调用当前页面搜索商品
+    nowSearchProduct();
+    // 调用商品的排序
     sortProduct();
-    // 调用下拉刷新和上拉加载的功能函数
+    // 调用初始化下拉刷新和上拉加载
     pullRefresh();
     // 调用跳转到商品详情的函数
     gotoDetail();
 
+    // 定义一个搜索商品的函数
+    function searchProduct() {
+        /* 1. 获取url search参数的值 跟这个参数的值来搜索
+        2. 调用API接口 把这个参数传递给API
+        3. 接收后台返回的数据 创建模板 调用模板
+        4. 渲染到商品列表里面 */
+        // 1. 调用封装好的获取url参数的值的方法 传入参数名获取参数的值
+        search = getQueryString('search');
+        // 2. 调用公共函数去搜索商品 把当前search放到参数对象作为实参传递
+        queryProduct({
+            proName: search
+        });
+    }
 
-    // 1. 查询商品列表的函数
-    function queryProduct() {
-        /* 思路
-            1. 根据当前商品名称来搜索商品(商品名称就是用户在输入框输入内容也就是当前url参数 search的值)
-            2. 调用查询商品的API
-            3. 把后台返回商品列表的数据 调用模板引擎生成html结构
-            4. 最后把生成html放到商品列表容器中 */
-        // 1. 调用自己封装获取url参数的值的函数 获取search参数的值 获取当前要搜索的商品名称 
-        proName = getQueryString('search');
-        console.log(proName);
-        // 2. 使用ajax请求商品的API 传入当前是search商品名称
+    // 定义当前页面商品搜索的函数
+    function nowSearchProduct() {
+        // 1. 给搜索按钮添加点击事件
+        $('.btn-search').on('tap', function () {
+            //   2. 获取当前输入内容
+            search = $('.input-search').val().trim();
+            if (search == '') {
+                return;
+            }
+            // 3. 调用公共函数去搜索商品 把当前search放到参数对象作为实参传递
+            queryProduct({
+                proName: search,
+                page: 1,
+                pageSize: 3
+            });
+        });
+    }
+
+    // 把公共请求API 传参 调用模板 渲染页面公共代码封装到一个函数里面 因为请求参数很多一个一个传很麻烦推荐使用对象
+    // params就是参数对象 接收一个传递过来的参数对象 里面有page pageSize proName等数据
+    function queryProduct(params) {
+        // 把默认值在发请求之前处理好
+        params.page = params.page || 1;
+        params.pageSize = params.pageSize || 2;
+        console.log(params);
+        // 1. 使用ajax请求商品列表API
         $.ajax({
             url: '/product/queryProduct',
-            data: {
-                proName: proName,
-                // 一定要传分页参数不然后台会挂掉  如果挂了重新npm start
-                page: 1,
-                pageSize: 4
-            },
-            //发请求之前的回调函数
-            beforeSend: function () {
-                console.log('之前');
-                //   把遮罩层显示
-                $('.mask').show();
-            },
-            //发送请求完成之后的回调函数 比success还慢 success都已经完成后才会执行complete
-            complete: function () {
-                console.log('之后');
-                // 请求成功后隐藏
-                $('.mask').hide();
-            },
+            // 2. 这个接口有些参数必传 一定要传 不传后台会挂掉（后台没处理好 就挂掉了 工作中正常只是返回error）
+            // page参数表示请求第几页数据
+            // pageSize 页容量 每页几条数据
+            // proName 搜索商品名称(根据商品名称搜索商品)
+            // 直接把整个params参数对象作为API请求的参数传递
+            data: params,
             success: function (res) {
                 console.log(res);
-                // 3. 调用模板生成商品列表结构
-                var html = template('productListTpl', res);
-                // console.log(html);
-                // 4. 把生成商品列表结构放到mui-row里面
+                console.log(res.data);
+                // 3. 调用模板指定模板id和当前后台返回的数据对象
+                var html = template('productlistTpl', res);
+                // 4. 把模板渲染到页面mui-row里面
                 $('.product-list .mui-row').html(html);
+
+                // 5. 每次数据刷新完成后重置上拉加载
+                mui('#pullrefresh').pullRefresh().refresh(true);
+                // 6. 还要重置一下page 下一次下拉又要从第一页开始
+                page = 1;
             }
         })
     }
 
-    // 2. 点击当前页面商品搜索按钮也要实现搜索功能
-    function searchProduct() {
-        // 1. 获取按钮添加点击事件 使用zepto都使用tap事件
-        $('.btn-search').on('tap', function () {
-            // 2. 获取当前输入内容 搜索的内容 把空格去掉 而且把首尾两端空格去掉
-            proName = $('.input-search').val().trim();
-            console.log(proName);
-            // 3. 判断如果没有输入内容 提示输入
-            if (proName == '') {
-                // 提示请输入要搜索 商品 使用MUI的消息框 自动消失消息框
-                mui.toast('请输入合法搜索内容!', {
-                    duration: 'long',
-                    type: 'div'
-                });
-                // 后面的代码也不执行了 所有使用return
-                // return;
-                // return false 不仅仅可以终止当前函数 还可以终止后面还要做的事情 比如表单提交等
-                return false;
-            }
-            // 4. 把当前记录加入到一个数组中 这个数组要看之前有没有数据有就使用之前数组去加 如果没有值就使用新的空数组加
-            var searchHistory = localStorage.getItem('searchHistory');
-            // 5. 判断之前数组有没有值
-            if (searchHistory) {
-                // 得把之前的值 转成一个数组 把字符串转成数组JSON.parse()
-                searchHistory = JSON.parse(searchHistory);
-            } else {
-                // 否则没有值就是空 使用空数组
-                searchHistory = [];
-            }
-            console.log(searchHistory);
-            // 6. 在添加之前还要进行去除 把之前旧的重复的值删掉
-            // 6.1 循环遍历整个数组
-            for (var i = 0; i < searchHistory.length; i++) {
-                // 6.2 判断当前数组的中每个值的key是否和当前输入search一致
-                if (searchHistory[i].key == proName) {
-                    // 6.3 应该删掉当前这个数组的值 splice删除数组中某个值第一个参数是删除的元素索引 第二个删除个数
-                    searchHistory.splice(i, 1)
-                    // 6.4 如果有多个重复的数据 删掉一个值数组长度少了一个 i--
-                    i--;
-                }
-            }
-            // 7. 往数组里面添加值 push 往后 unshift往前加
-            searchHistory.unshift({
-                key: proName,
-                time: new Date().getTime()
-            });
-            console.log(searchHistory);
-            // 8. 把数组转成json字符串存储到本地存储中
-            localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-            // 10. 添加完成后清空输入框
-            $('.input-search').val('');
-            // 11. 跳转到商品列表并且传递一些参数过来  跳转页面为了防止页面缓存多传一个参数 时间 随机数等 页面url变了重新请求不会使用缓存
-            location = 'productlist.html?search=' + proName + '&time=' + new Date().getTime();
-        });
-    }
-
-    // 3. 商品排序功能函数
+    // 商品的排序
     function sortProduct() {
-        /* 思路
-            1. 给所有排序按钮添加点击事件
-            2. 切换active类名
-            3. 获取当前排序的方式 (提前把所有按钮排序方式保存到按钮属性上 通过js去获取排序方式)
-            4. 调用API传人当前商品排序的方式 和 排序顺序（1表示升序  2 表示降序）
-            5. 获取后台排序后的商品数据 调用模板 
-            6. 把模板渲染到页面 */
-        // 1. 给所有排序按钮添加点击事件
+        /* 
+        1. 点击了排序按钮做排序 （价格 和 销量）
+        2. 知道点击价格还是销量 为了区分排序方式设置一个排序方式属性在a标签上
+        3. 点击的时候获取当前属性 data-type排序类型 做对应的排序(点击了价格获取price 就进行price的排序)
+        4. 还要获取排序的顺序把顺序存储到标签上 通过data-sort属性设置当前排序的顺序
+        5. 判断排序顺序 如果是1 升序 就要改成 2 降序  如果是2改成1
+        6. 最后传入排序类型和顺序   
+        7. 获取到数据调用模板  渲染模板 */
+
+        // 1. 给所有按钮添加点击事件
         $('.product-list .mui-card-header a').on('tap', function () {
-            console.log(this);
-            // 2. 切换类名
-            $(this).addClass('active').siblings().removeClass('active');
-            // 3. 切换当前图标 根据当前按钮排序顺序来切换 获取当前排序顺序判断
-            var sort = $(this).data('sort');
-            console.log(sort);
-            // 4. 如果默认顺序是2降序 点击了之后改成1升序 如果默认是1升序 点击了变成2降序
-            if (sort == 2) {
-                sort = 1;
-                // 4.1 把图标改成向上 把之前向下图标删掉换成向上
-                $(this).find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
-            } else {
-                sort = 2;
-                // 4.1 把图标改成向下 把之前向上图标删掉换成向下
-                $(this).find('i').removeClass('fa-angle-up').addClass('fa-angle-down');
-            }
-            // 4.3 改完了sort页面属性也要更新
-            $(this).data('sort', sort);
-            // 5. 获取当前的排序的类型
+            // 2. 获取当前排序类型
             var type = $(this).data('type');
             console.log(type);
-            // proName = getQueryString('search');
-            // console.log(proName);
-            // 需要给参数对象添加一个动态属性 把参数对象单独拿出来处理
+            // 3. 获取当前的排序顺序
+            var sort = $(this).data('sort');
+            // console.log(sort);
+            // 4. 需要修改sort
+            if (sort == 1) {
+                sort = 2;
+                // 如果排序顺序是1 即将要变成2  把原来的类名fa-angle-down 换成fa-angle-up
+                $(this).find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
+            } else {
+                sort = 1;
+                // 如果排序是2 即将要变成1  把原来类名  fa-angle-up 换成 fa-angle-down
+                $(this).find('i').removeClass('fa-angle-up').addClass('fa-angle-down');
+            }
+            // 5. 修改完成sort重新保存到当前元素的data-sort属性上
+            $(this).data('sort', sort);
+            console.log(sort);
+            // 6. 切换active类名
+            $(this).addClass('active').siblings().removeClass('active');
+            // 7. 调用公共请求商品列表函数和渲染函数
             var obj = {
-                proName: proName,
+                proName: search,
                 page: 1,
                 pageSize: 4
             }
-            // 使用中括号的方式添加一个动态的属性
+            // obj[key] = value 给对象添加一个动态的属性和值
+            // 8. 准备参数对象给参数动态添加一个属性
             obj[type] = sort;
-            // obj.price obj.num
             console.log(obj);
-
-            // 6. 调用API传入当前的排序类型和排序的顺序
-            $.ajax({
-                url: '/product/queryProduct',
-                data: obj,
-                success: function (res) {
-                    console.log(res);
-                    // 7. 调用模板生成商品列表结构
-                    var html = template('productListTpl', res);
-                    // console.log(html);
-                    // 8. 把生成商品列表结构放到mui-row里面
-                    $('.product-list .mui-row').html(html);
-                }
-            })
+            // 9. 调用公共函数去查询商品列表
+            queryProduct(obj);
         });
     }
 
-    // 4. 下拉刷新和上拉加载更多的功能 函数
     function pullRefresh() {
-        /* 思路
-            1. 进行初始化下拉刷新和上拉加载更多
-            2. 指定下拉刷新的回调函数 
-            3. 指定上拉加载的回调函数
-            4. 在下拉刷新回调函数 请求最新数据 并且 渲染页面 并且结束转圈圈
-            5. 在上拉加载更多数据回调函数 请求更多数据 并且 追加页面 并且结束转圈圈
-            6. 上拉可能没有数据了 结束并且提示没有数据了 */
-        // 1. 初始化下拉刷新
         mui.init({
             pullRefresh: {
-                // 指定当前下拉刷新的父容器 建议使用id选择器给区域滚动添加一个 pullrefresh id
-                container: '#pullrefresh',
-                // 初始化下拉刷新
+                container: '.mui-scroll-wrapper',
                 down: {
-                    // 下拉刷新的回调函数 用真正的刷新数据 发送请求真实刷新数据和页面
                     callback: pulldownRefresh
                 },
-                // 初始化上拉加载更多
                 up: {
-                    // 上拉加载的回调函数 用来真正请求更多数据 追加到页面上
+                    contentrefresh: '正在加载...',
                     callback: pullupRefresh
                 }
             }
         });
-        // 2. 指定下拉刷新的具体业务函数
+        /**
+         * 下拉刷新具体业务实现
+         */
         function pulldownRefresh() {
-            // 如果想要请求慢一点转久一点 加一个定时器延迟请求
             setTimeout(function () {
-                // 4. 调用查询函数重新查询刷新页面
-                queryProduct();
-                // 5. 刷新完成要调用结束转圈圈的函数 函数代码一定不要写错 官网文档有错
+                console.log('触发了下拉');
+                // 1. 调用查询刷新数据
+                queryProduct({
+                    proName: search,
+                    page: 1,
+                    pageSize: 3
+                });
+                // 2. 结束下拉刷新的转圈圈
+                // mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+                // 文档里面的结束下拉刷新的函数有问题 推荐使用demo里面的代码
                 // mui('#pullrefresh').pullRefresh().endPulldown();
-                // 使用官方demo文档里面新版代码结束转圈圈
-                mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
-            }, 1000);
+            }, 1500);
         }
-        var page = 1;
 
-        // 3. 指定上拉加载的具体业务函数
+        /**
+         * 上拉加载具体业务实现
+         */
         function pullupRefresh() {
-            // 如果想要请求慢一点转久一点 加一个定时器延迟请求
             setTimeout(function () {
-                //   proName = getQueryString('search')
-                // 6. 请求更多数据 请求下一页数据 定义一个page 进行 ++page
+                // 1. 上拉请求下一页数据 page++
+                page++;
+                console.log(page);
+                // 2. 请求下一页数据
                 $.ajax({
                     url: '/product/queryProduct',
                     data: {
-                        proName: proName,
-                        // 定义一个变量page存储了当前页码数 请求下一页让page进行++ 要前自增
-                        page: ++page,
-                        pageSize: 4
+                        page: page,
+                        pageSize: 2,
+                        proName: search
                     },
                     success: function (res) {
                         console.log(res);
-                        // 7. 判断如果数据已经没有长度 表示没有数据 不需要调用模板和追加 直接提示没有数据了
+                        console.log(res.data);
                         if (res.data.length > 0) {
-                            // 8.1 调用模板生成商品列表结构
-                            var html = template('productListTpl', res);
-                            // console.log(html);
-                            // 8.2 请求了更多数据下一页 追加到页面 append函数
-                            $(' .mui-row').append(html);
-                            // 8.3 数据追加完毕要结束转圈圈 注意这个函数是up不是down
+                            // 3. 调用模板指定模板id和当前后台返回的数据对象
+                            var html = template('productlistTpl', res);
+                            // 4. 把模板渲染到页面mui-row里面 追加渲染使用append
+                            $('.product-list .mui-row').append(html);
                             mui('#pullrefresh').pullRefresh().endPullupToRefresh();
                         } else {
-                            // 9. 没有数据 结束转圈圈 并且提示没有数据了
                             mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
                         }
+
                     }
                 })
-            }, 1000)
+            }, 1500);
+
         }
     }
 
-    // 5. 点击购买跳转到商品详情
+    // 跳转到商品详情
     function gotoDetail() {
-        /* 1. 给所有立即购买按钮添加点击事件
-        2. 获取当前点击按钮上的商品id (获取data-id属性的值)
-        3. 通过 location 跳转到商品详情 并且传入id参数 */
-        //  1. 给所有立即购买按钮添加点击事件 由于列表动态也要使用委托
+        // 1. 给立即购买按钮添加点击事件 动态添加按钮使用委托方式添加
         $('.product-list').on('tap', '.product-buy', function () {
-            // 2. 获取当前点击按钮上的商品id (获取data-id属性的值)
+            //   2. 获取当前的按钮的身上商品id
             var id = $(this).data('id');
-            // 3. 通过 location 跳转到商品详情 并且传入id参数 
+            console.log(id);
+            // 3. 跳转到商品详情并且把id传过去
             location = 'detail.html?id=' + id;
         });
     }
 
-
-
+    // 使用正则匹配url参数 返回这个匹配成功的值 根据参数名获取参数的值
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            console.log(r);
+            // 别人之前使用unescape 方式解密  但是我们默认是encodeURI加密 使用 decodeURI 解密
+            return decodeURI(r[2]);
+        }
+        return null;
+    }
 })

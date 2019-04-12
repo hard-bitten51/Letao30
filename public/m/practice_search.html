@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>搜索页面</title>
+
+    <link rel="stylesheet" href="./lib/mui/css/mui.min.css">
+    <link rel="stylesheet" href="./lib/fontAwesome/css/font-awesome.css">
+    <link rel="stylesheet" href="./lib/swiper/css/swiper.min.css">
+    <link rel="stylesheet" href="./less/practice_search.css">
+</head>
+<body>
+    <!-- 头部区局 -->
+    <header id="header">
+        <div class="left">
+            <a href="#"><i class="fa fa-mars-stroke-h"></i></a>
+        </div>
+        <div class="center">
+            <h4>搜索中心</h4>
+        </div>
+        <div class="right">
+            
+        </div>
+    </header>
+    <!-- 主体部分 -->
+    <main id="main">
+        <form action="javascript:void(0)" class="search-form">
+            <input type="search" placeholder="请输入关键词进行搜索" class="input-search">
+            <button type="button" class="mui-btn mui-btn-primary btn-search">搜索</button>
+        </form>
+        <div class="mui-card search-history">
+                <!--页眉，放置标题-->
+                <div class="mui-card-header">
+                    <span>搜索历史</span>
+                    <span class="fa fa-trash btn-clear">清空记录</span>
+                </div>
+                <!--内容区-->
+                <div class="mui-card-content">
+                    <div class="mui-scroll-wrapper">
+                        <div class="mui-scroll">
+                            <!--这里放置真实显示的DOM内容-->
+                            <ul class="mui-table-view">
+                                <li class="mui-table-view-cell">
+                                    记录1
+                                    <!-- mui-badge mui提供 右边带数字角标的样式 添加一个x图标 -->
+                                    <span class="mui-badge fa fa-close"></span>
+                                </li>
+                                <li class="mui-table-view-cell">
+                                    记录2
+                                    <!-- mui-badge mui提供 右边带数字角标的样式 添加一个x图标 -->
+                                    <span class="mui-badge fa fa-close"></span>
+                                </li>
+                                <li class="mui-table-view-cell">
+                                    记录3
+                                    <!-- mui-badge mui提供 右边带数字角标的样式 添加一个x图标 -->
+                                    <span class="mui-badge fa fa-close"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+    </main> 
+<!-- 底部部分 -->
+    <footer id="footer">
+    <!-- mui的栅格和bootstrap一样也是行和列组成 一行最多12列 只有2中屏幕 xs  和 sm  行不需要放容器
+    列 必须放行里面 -->
+    <div class="mui-row">
+            <div class="mui-col-xs-3">
+                <a href="index.html" >
+                    <i class="fa fa-home"></i>
+                    <span>首页</span>
+                </a>
+            </div>
+            <div class="mui-col-xs-3">
+                <a href="category.html">
+                    <i class="fa fa-bars"></i>
+                    <span>分类</span>
+                </a>
+            </div>
+            <div class="mui-col-xs-3">
+                <a href="cart.html">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>购物车</span>
+                </a>
+            </div>
+            <div class="mui-col-xs-3">
+                <a href="user.html">
+                    <i class="fa fa-user"></i>
+                    <span>个人中心</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script id="historyTpl" type="text/html">
+        <!-- 做非空判断 -->
+        {{if rows.length <= 0}}
+            <li class='mui-table-view-cell'>
+                Sorry! Nothing here !
+            </li>
+            {{else}}
+                {{each rows value index}}
+                    <li class='mui-table-view-cell'>
+                        {{value}}
+                        <!-- 手动添加一个index类名 -->
+                        <span class='mui-badge fa fa-close btn-delete' data-index= "{{index}}"></span>
+                    </li>
+                {{/each}}
+        {{/if}}
+    </script>
+</body>
+<script src="./lib/mui/js/mui.js"></script>
+<script src="./lib/zepto/zepto.min.js"></script>
+<script src="./lib/artTemplate/template-web.js"></script>
+<script src="./js/practice_search.js"></script>
+</html>

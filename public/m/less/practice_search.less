@@ -1,26 +1,21 @@
-@import 'base.less';
+@import './practice_base.less';
 
-/* 主体部分的样式 */
-#main {
+#main{
     background-color: #fff;
     display: flex;
     flex-direction: column;
 
-
-    /* 搜索历史的样式 */
-    .search-history {
+    .search-history{
         flex: 1;
         display: flex;
         flex-direction: column;
 
-        .mui-card-header {
+        .mui-card-header{
             height: .44rem;
         }
-
         .mui-card-content {
             flex: 1;
         }
-
         .mui-table-view-cell {
             padding: .15rem;
 
@@ -31,7 +26,6 @@
                 line-height: .18rem;
             }
         }
-
         .mui-table-view-cell:after {
             left: 0;
 

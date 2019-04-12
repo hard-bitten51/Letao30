@@ -40,6 +40,7 @@
                         <a href="javascript:;" class="product">
                             <div class="mui-pull-left">
                                 <img class="mui-media-object" src="./images/user.jpg">
+                                
                                 <div class="mui-input-row mui-checkbox">
                                     <input name="checkbox1" value="Item 1" type="checkbox" checked>
                                 </div>
@@ -62,8 +63,8 @@
                                 </div>
                             </div>
                         </a>
-                    </li>
-                    -->
+                    </li> -->
+                   
                 </ul>
             </div>
         </div>
@@ -108,22 +109,21 @@
     </footer>
     <script id="cartlistTpl" type="text/html">
         <!-- 后台返回对象里面的数组是data -->
-        {{each data value}}
+        {{each rows value}}
         <li class="mui-table-view-cell mui-media">
             <!-- 在a的前面放一个右边滑动显示的按钮 -->
             <div class="mui-slider-right mui-disabled">
-                <!-- 直接把整个商品对象保存到属性里面 -->
-                <a class="mui-btn mui-btn-blue btn-edit" data-product="{{value}}">编辑</a>
-                <a class="mui-btn mui-btn-red btn-delete" data-id="{{value.id}}">删除</a>
-            </div>
-            <!-- 把默认整个a当成左边默认显示内容 -->
+                    <!-- 直接把整个商品对象保存到属性里面 -->
+                    <a class="mui-btn mui-btn-blue btn-edit" data-product="{{value}}">编辑</a>
+                    <a class="mui-btn mui-btn-red btn-delete" data-id="{{value.id}}">删除</a>
+                </div>
+                <!-- 把默认整个a当成左边默认显示内容 -->
             <a href="javascript:;" class="product mui-slider-handle">
                 <div class="mui-pull-left">
-                    <!-- 图片也是一个数组 取数组中的第一个图片地址 -->
                     <img class="mui-media-object" src="{{value.pic[0].picAddr}}">
                     <div class="mui-input-row mui-checkbox">
-                        <!-- 复选框默认定位可能会看不见（但其实是在的） -->
-                        <input name="checkbox1" value="Item 1" type="checkbox" checked data-price="{{value.price}}" data-num="{{value.num}}">
+                        <!-- 如需默认全选，在input中添加checked即可 -->
+                        <input name="checkbox1" value="Item 1" type="checkbox" data-price="{{value.price}}" data-num="{{value.num}}">
                     </div>
                 </div>
                 <div class="mui-media-body">
@@ -131,8 +131,8 @@
                         名称：{{value.proName}}
                     </div>
                     <div class="product-price">
-                        价格：<span>￥{{value.price}}</span>
-                        <del>￥{{value.oldPrice}}</span>
+                        价格：<span>{{value.price}}</span>
+                        <del>{{value.oldPrice}}</span>
                     </div>
                     <div class="product-params">
                         <div class="product-size">
@@ -145,52 +145,41 @@
                 </div>
             </a>
         </li>
-        <!-- <li class="mui-table-view-cell"> -->
-        <!-- 右边隐藏的按钮 -->
-        <!-- <div class="mui-slider-right mui-disabled">
-                <a class="mui-btn mui-btn-red">删除</a>
-            </div> -->
-        <!-- 左边默认显示(要做滑动的内容) -->
-        <!-- <div class="mui-slider-handle">
-                左滑显示删除按钮
-            </div>
-        </li> -->
-        {{/each}}
+       {{/each}}
     </script>
-
-    <!-- 创建一个购物车的编辑的模板 -->
+    <!-- 创建一个购物车的编辑模板 -->
     <script id="editCartTpl" type="text/html">
         <ul class="mui-table-view">
-            <li class="mui-table-view-cell">
-                <!-- mui默认给子元素按钮设置定位 把按钮变成li的孙子 不需要修改样式 -->
-                <div class="product-size">
-                    尺码：
-                    <!-- 遍历自己给他创建一个size数组 -->
-                    <!-- 现在data里面有很多数据 productSize所有尺码 size当前尺码 productNum所有数量 num当前选择数量 -->
-                    {{each productSize value}}
-                    <!-- value所有尺码某个尺码 size之前选择的尺码 当2个一样的时候设置类名 -->
-                    <button type="button" class="mui-btn btn-size {{value == size ? 'mui-btn-warning' : ''}}"
-                        data-size="{{value}}">{{value}}</button>
-                    {{/each}}
-                </div>
-
-            </li>
-            <li class="mui-table-view-cell">
-                <!-- data-numbox-step='1'每次+几个 
-        data-numbox-min='0' 最小值
-        data-numbox-max='10' 最大值 -->
-                <div class="product-num">
-                    数量：
-                    <div class="mui-numbox" data-numbox-step='1' data-numbox-min='1' data-numbox-max='{{productNum}}'>
-                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-                        <input class="mui-numbox-input" type="number" value="{{num}}" />
-                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                <li class="mui-table-view-cell">
+                    <!-- mui默认给子元素按钮设置定位 把按钮变成li的孙子 不需要修改样式 -->
+                    <div class="product-size">
+                        尺码：
+                        <!-- 遍历自己给他创建一个size数组 -->
+                        <!-- 现在data里面有很多数据 productSize所有尺码 size当前尺码 productNum所有数量 num当前选择数量 -->
+                        {{each productSize value}}
+                        <!-- value所有尺码某个尺码 size之前选择的尺码 当2个一样的时候设置类名 -->
+                        <button type="button" class="mui-btn btn-size {{value == size ? 'mui-btn-warning' : ''}}"
+                            data-size="{{value}}">{{value}}</button>
+                        {{/each}}
                     </div>
-                    剩余 <span>{{productNum}}</span> 件
-                </div>
-
-            </li>
-        </ul>
+    
+                </li>
+                <li class="mui-table-view-cell">
+                    <!-- data-numbox-step='1'每次+几个 
+            data-numbox-min='0' 最小值
+            data-numbox-max='10' 最大值 -->
+                    <div class="product-num">
+                        数量：
+                        <div class="mui-numbox" data-numbox-step='1' data-numbox-min='1' data-numbox-max='{{productNum}}'>
+                            <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                            <input class="mui-numbox-input" type="number" value="{{num}}" />
+                            <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                        </div>
+                        剩余 <span>{{productNum}}</span> 件
+                    </div>
+    
+                </li>
+            </ul>
     </script>
     <!-- 1. MUI和bootstrap一样 还有JS功能 引入mui.js  但是mui不依赖jquery-->
     <script src="./lib/mui/js/mui.js"></script>
@@ -199,7 +188,7 @@
     <!-- 3. 引入模板引擎的js artTemplate-web最新版-->
     <script src="./lib/artTemplate/template-web.js"></script>
     <!-- 4. 引入自己的js文件 -->
-    <script src="./js/cart.js"></script>
+    <script src="./js/practice_cart.js"></script>
 </body>
 
 </html>

@@ -1,32 +1,5 @@
-@import 'practice_base.less';
+@import './practice_base.less';
 
-#header{
-    display: flex;
-    background-color: @main-color;
-    color: #fff;
-    // position: relative;
-    // top: 0;
-    width: 100%;
-    z-index: 999;
-    .left{
-        width: 0.45rem;
-        height: 0.45rem;
-    }
-    .center {
-        flex: 1;
-        text-align: center;
-        h4{
-            line-height: .45rem;
-            font-weight: normal; 
-        }
-    }
-    .right {
-        width: 0.45rem;
-        height: 0.45rem;
-        text-align: center;
-        line-height: .45rem;
-    }
-}
 
 #main{
     flex: 1;
@@ -38,33 +11,64 @@
         
     }
     .nav{
-        width: 100%;
-        .mui-col-xs-4{
-            a{
+        padding: .1rem;
+
+        a{
+            display: block;
+            img{
                 width: 100%;
-                img{
-                    width: 100%;
-                }
             }
-        }
+        } 
     }
     .banner{
+        padding: 0 10px;
         .left{
-            height: 240px;
+            
             a{
                 display: block;
-                width: 100%;
+                display: flex;
                 img{
                     width: 50%;
                 }
             }
         }
-        .right{
-            a{
-                display: block;
-                height: 240px;
+        a{
+            display: block;
+
+            img{
+                width: 100%;
             }
         }
         
+        .mui-col-xs-8{
+            a{
+                img{
+                    height: 1.2rem;
+                }
+            }
+        }
+        .mui-col-xs-4{
+            a{
+                img{
+                    height: 2.4rem;
+                }
+            }
+        }
+    }
+    .brand,
+    .sport,
+    .women,
+    .man{
+        padding: 10px;
+        
+        a{
+            display: block;
+            width: 100%;
+            img{
+                width: 100%;
+                color: #fff;
+                
+            }
+        }
     }
 }

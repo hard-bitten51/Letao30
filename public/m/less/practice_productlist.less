@@ -1,0 +1,49 @@
+@import './practice_base.less';
+
+// 主体样式
+#main{
+    .product-list{
+        .mui-card-header{
+            a{
+                color: #666;
+                font-size: .14rem;
+                &.active{
+                    color:red;
+                }
+            }
+        }
+        .mui-card-content{
+            .mui-row{
+                >div{
+                   
+                    &:nth-child(odd){
+                        padding-right: .05rem;
+                    }
+                    &:nth-child(even){
+                        padding-left: .05rem;
+                    }
+                    .product{
+                        border:1px solid #ccc;
+                        text-align: center;      
+                        margin-top: .1rem;                  
+                        padding-bottom: .1rem;
+                        .product-img{
+                            width: 100%;
+                        }
+                        .product-name{
+                            line-height: .18rem;
+                        }
+                        .product-price{
+                            span{
+                                color:red;
+                            }
+                            del{
+                                color:#ccc;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

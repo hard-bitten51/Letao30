@@ -39,51 +39,35 @@
                 <div class="mui-scroll">
                     <!--这里放置真实显示的DOM内容-->
                     <ul class="mui-table-view">
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
-                        <li class="mui-table-view-cell">运动馆</li>
+                            <li class="mui-table-view-cell active" data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
+                            <li class="mui-table-view-cell " data-id="1">运动馆</li>
                     </ul>
                 </div>
             </div>
@@ -270,9 +254,39 @@
             </div>
         </div>
     </footer>
+    <!-- 创建一个分类左侧的模板 -->
+    <script id="categoryLeftTpl" type="text/html">
+        <!-- 遍历返回的数据的rows数组 -->
+        {{each rows value}}
+            <!-- 如果一些数据需要在js里面获取推荐绑定到标签的data-属性上 自定义属性 -->
+            <!-- 三元运算符 判断id 是否==1 等于1 返回active 否则返回空 让默认第一个有类名 -->
+            <li class="mui-table-view-cell {{value.id == 1 ? 'active' : ''}}" data-id="{{value.id}}">{{value.categoryName}}</li>
+        {{/each}}
+    </script>
+    <!-- 创建一个二级分类的模板 -->
+    <script id="categoryRightTpl" type="text/html">
+        <!-- 在模板里面进行数据判断有数就遍历渲染 没有数据之间提示没有数据了 -->
+        <!-- 判断如果rows数组有长度 -->
+        {{if rows.length > 0}}
+            {{each rows value}}
+            <div class="mui-col-xs-4">
+                <a href="#">
+                    <img src="{{value.brandLogo}}" alt="">
+                    <p>{{value.brandName}}</p>
+                </a>
+            </div>
+            {{/each}}
+        {{else}}
+            <p>此店正规按摩，需要黄图请去旁边</p>
+        {{/if}}
+    </script>
     <!-- 1. MUI和bootstrap一样 还有JS功能 引入mui.js  但是mui不依赖jquery-->
     <script src="./lib/mui/js/mui.js"></script>
-    <!-- 2. 引入首页自己的js文件 -->
+    <!-- 2. 引入zepto 帮助我们获取元素和ajax请求 -->
+    <script src="./lib/zepto/zepto.min.js"></script>
+    <!-- 3. 引入模板引擎的js artTemplate-web最新版-->
+    <script src="./lib/artTemplate/template-web.js"></script>
+    <!-- 4. 引入首页自己的js文件 -->
     <script src="./js/category.js"></script>
 </body>
 

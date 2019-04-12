@@ -24,3 +24,137 @@ h6{
 img{
     vertical-align: middle;
 }
+
+// 封装一个类似js函数 把一些重复使用代码封装到函数里面 在less里面也有函数 他的函数就类名写法一样
+// 定义了一个类名使用flex实现内容水平垂直居中
+.dfcc() {
+    // 把需要水平垂直居中的样式代码放到这个公共的类名里面
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bt() {
+    border-top: 1px solid #ccc;
+}
+
+.bb() {
+    border-bottom: 1px solid #ccc;
+}
+
+// 函数还可以传参数  @width参数名 叫@width   :1px 如果不传的默认值  ,多个参数用逗号隔开
+.bl(@width: 1px, @style: solid, @color: #ccc) {
+    border-left: @width @style @color;
+}
+
+.br() {
+    border-right: 1px solid #ccc;
+}
+
+#header{
+    background-color: @main-color;
+    display: flex;
+    height: .45rem;
+    .left{
+        //所有单位都换成rem 单独针对移动端 要做rem适配
+        width: .45rem;
+        height: .45rem;
+        a{
+            display: block;
+            color: #fff;
+            height: .45rem;
+            .dfcc();
+        }
+    }
+    .center{
+        flex:1;
+        h4 {
+            color:#fff;
+            font-weight: normal;
+            .dfcc();   
+            height: 100%;
+        }
+        form {
+            padding-top: .05rem;
+            input{
+                background-color: #fff;
+                height: 35px;
+                text-align: left;
+                font-size: .14rem;
+                margin-bottom: 0;
+            }
+        }
+    }
+    .right {
+        width: .45rem;
+        height: .45rem;
+        .dfcc();
+
+        a{
+            color: #fff; 
+            display: block;
+        }
+    }
+}
+
+//主体部分
+#main{
+    flex: 1;
+    // background-color: pink;
+    overflow: hidden;
+
+    .mui-scroll-wrapper{
+        position: relative;
+        height: 100%;
+    }
+    .search-form{
+        display: flex;
+        padding: .1rem;
+        height: 0.54rem;
+
+        input {
+            flex: 1;
+            border: 1px solid @main-color;
+            background-color: #fff;
+            text-align: left;
+            font-size: .14rem;
+            border-radius: .06rem 0px 0px .06rem;
+            margin-bottom: 0;
+        }
+        button{
+            width: .6rem;
+            height: .34rem;
+            border-radius: 0 .06rem .06rem 0;
+            background-color: @main-color;
+            // border-color: @main-color;
+            border-left: 0 ;
+        }
+    }
+}
+
+//底部部分
+#footer{
+    background-color: @main-color;
+    // display: flex;
+    height: .45rem;
+
+    .mui-row {
+        >div{
+            a{
+                height: .45rem;
+                color: #fff;
+                .dfcc();
+                &.active{
+                    color: orangered;
+                }
+                i{
+                    display: block;
+                }
+                span{
+                    display: block;
+                }
+            }
+        }
+    }
+}

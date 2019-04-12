@@ -3,22 +3,21 @@
 
 <head>
     <meta charset="UTF-8">
-    <!-- 1. 设置视口 -->
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- 添加视口 -->
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>自己写乐淘移动端商品列表</title>
-    <!-- 1. 引入MUI的CSS文件 使用这个没有压缩 mui.css带了rem单位 -->
+    <title>自写的乐淘移动端商品列表</title>
+    <!-- 1. 也要使用一个UI框架 叫MUI 像bootstrap一样引包  引入mui.css -->
     <link rel="stylesheet" href="./lib/mui/css/mui.css">
-    <!-- 2. 引入fontawesome字体图标库的css文件 提供页面中字体图标-->
+    <!-- 2. 引入font-awesome字体图标库 -->
     <link rel="stylesheet" href="./lib/fontAwesome/css/font-awesome.css">
-    <!-- 4. 如果想使用swiper轮播图 因为swiper的css-->
-    <link rel="stylesheet" href="./lib/swiper/css/swiper.css">
     <!-- 3. 引入自己的css文件 -->
     <link rel="stylesheet" href="./less/productlist.css">
 </head>
 
 <body>
-    <!-- 头部区域 -->
+    <!-- 公共的头部区域 -->
     <header id="header">
         <div class="left">
             <a href="#" class="fa fa-arrow-left"></a>
@@ -30,125 +29,182 @@
 
         </div>
     </header>
-
-    <!-- 主体区域 -->
+    <!-- 主体内容 -->
     <main id="main">
-        <div id="pullrefresh" class="mui-scroll-wrapper">
+        <!--下拉刷新容器 就是区域滚动的容器-->
+        <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
             <div class="mui-scroll">
-                <!--这里放置真实显示的DOM内容-->
+                <!-- 内容就放到区域滚动的子容器里面 -->
                 <!-- 搜索表单 -->
-                <div class="search-form">
-                    <form action="#">
-                        <input type="search" placeholder="请输入要搜索的商品" class="input-search">
-                        <button type="button" class="mui-btn mui-btn-primary btn-search">搜索</button>
-                    </form>
-                </div>
-                <!-- 商品列表 -->
-                <div class="product-list">
-                    <div class="mui-card">
-                        <!--页眉，放置标题-->
-                        <div class="mui-card-header">
-                            <!-- .mui-col-xs-3*4>a[href="#"]{上架时间}>i.fa.fa-angle-down -->
-                            <!-- data-type当前按钮排序的方式 data-sort是当前按钮的排序顺序 1升序 2降序 -->
-                            <a href="#" data-type="time" data-sort="2">上架时间<i class="fa fa-angle-down"></i></a>
-                            <a href="#" class="active" data-type="price" data-sort="2">价格<i class="fa fa-angle-down"></i></a>
-                            <a href="#" data-type="num" data-sort="2">销量<i class="fa fa-angle-down"></i></a>
-                            <a href="#" data-type="discount" data-sort="2">折扣<i class="fa fa-angle-down"></i></a>
-                        </div>
-                        <!--内容区-->
-                        <div class="mui-card-content">
-                            <div class="mui-row">
-                                <div class="mui-col-xs-6">
-                                    <!-- 商品容器 -->
-                                    <div class="product">
-                                        <img src="/mobile/images/brand3.png" alt="" class="product-img">
-                                        <p class="product-name">
-                                            李宁闪击篮球鞋驭帅10镭射队尚4男韦德之道空袭中高帮队尚3.5球鞋
-                                        </p>
-                                        <p class="product-price">
-                                            <span>￥888.99</span>
-                                            <del>￥999.99</del>
-                                        </p>
-                                        <button type="button" class="mui-btn mui-btn-primary product-buy">立即购买</button>
-                                    </div>
+                <form action="#" class="search-form">
+                    <input type="search" placeholder="请输入要搜索的商品" class="input-search">
+                    <button type="button" class="mui-btn mui-btn-primary btn-search">搜索</button>
+                </form>
+                <!-- 商品列表 使用卡片布局-->
+                <div class="mui-card product-list">
+                    <!--页眉，放置标题-->
+                    <div class="mui-card-header">
+                        <a href="#" data-type="time" data-sort="1">上架时间 <i class="fa fa-angle-down"></i></a>
+                        <a href="#" data-type="price" data-sort="1">价格 <i class="fa fa-angle-down"></i></a>
+                        <a href="#" data-type="num" data-sort="1">销量 <i class="fa fa-angle-down"></i></a>
+                        <a href="#" data-type="discount" data-sort="1">折扣 <i class="fa fa-angle-down"></i></a>
+                    </div>
+                    <!--内容区-->
+                    <div class="mui-card-content">
+                        <div class="mui-row">
+                            <div class="mui-col-xs-6">
+                                <div class="product">
+                                    <img src="./images/active5.png" alt="" class="product-img">
+                                    <p class="product-name">李宁闪击篮球鞋驭帅10镭射队尚4男韦德之道空袭中高帮队尚3.5球鞋</p>
+                                    <p class="product-price">
+                                        <span>￥888.88</span>
+                                        <del>￥999.99</del>
+                                    </p>
+                                    <button type="button" class="mui-btn mui-btn-primary product-buy">立即购买</button>
                                 </div>
-                                <div class="mui-col-xs-6">
-                                    <!-- 商品容器 -->
-                                    <div class="product">
-                                        <img src="/mobile/images/brand3.png" alt="" class="product-img">
-                                        <p class="product-name">
-                                            李宁闪击篮球鞋驭帅10镭射队尚4男韦德之道空袭中高帮队尚3.5球鞋
-                                        </p>
-                                        <p class="product-price">
-                                            <span>￥888.99</span>
-                                            <del>￥999.99</del>
-                                        </p>
-                                        <button type="button" class="mui-btn mui-btn-primary product-buy">立即购买</button>
-                                    </div>
+                            </div>
+                            <div class="mui-col-xs-6">
+                                <div class="product">
+                                    <img src="./images/active5.png" alt="" class="product-img">
+                                    <p class="product-name">李宁闪击篮球鞋驭帅10镭射队尚4男韦德之道空袭中高帮队尚3.5球鞋</p>
+                                    <p class="product-price">
+                                        <span>￥888.88</span>
+                                        <del>￥999.99</del>
+                                    </p>
+                                    <button type="button" class="mui-btn mui-btn-primary product-buy">立即购买</button>
+                                </div>
+                            </div>
+                            <div class="mui-col-xs-6">
+                                <div class="product">
+                                    <img src="./images/active5.png" alt="" class="product-img">
+                                    <p class="product-name">李宁闪击篮球鞋驭帅10镭射队尚4男韦德之道空袭中高帮队尚3.5球鞋</p>
+                                    <p class="product-price">
+                                        <span>￥888.88</span>
+                                        <del>￥999.99</del>
+                                    </p>
+                                    <button type="button" class="mui-btn mui-btn-primary product-buy">立即购买</button>
+                                </div>
+                            </div>
+                            <div class="mui-col-xs-6">
+                                <div class="product">
+                                    <img src="./images/active5.png" alt="" class="product-img">
+                                    <p class="product-name">李宁闪击篮球鞋驭帅10镭射队尚4男韦德之道空袭中高帮队尚3.5球鞋</p>
+                                    <p class="product-price">
+                                        <span>￥888.88</span>
+                                        <del>￥999.99</del>
+                                    </p>
+                                    <button type="button" class="mui-btn mui-btn-primary product-buy">立即购买</button>
+                                </div>
+                            </div>
+                            <div class="mui-col-xs-6">
+                                <div class="product">
+                                    <img src="./images/active5.png" alt="" class="product-img">
+                                    <p class="product-name">李宁闪击篮球鞋驭帅10镭射队尚4男韦德之道空袭中高帮队尚3.5球鞋</p>
+                                    <p class="product-price">
+                                        <span>￥888.88</span>
+                                        <del>￥999.99</del>
+                                    </p>
+                                    <button type="button" class="mui-btn mui-btn-primary product-buy">立即购买</button>
+                                </div>
+                            </div>
+                            <div class="mui-col-xs-6">
+                                <div class="product">
+                                    <img src="./images/active5.png" alt="" class="product-img">
+                                    <p class="product-name">李宁闪击篮球鞋驭帅10镭射队尚4男韦德之道空袭中高帮队尚3.5球鞋</p>
+                                    <p class="product-price">
+                                        <span>￥888.88</span>
+                                        <del>￥999.99</del>
+                                    </p>
+                                    <button type="button" class="mui-btn mui-btn-primary product-buy">立即购买</button>
+                                </div>
+                            </div>
+                            <div class="mui-col-xs-6">
+                                <div class="product">
+                                    <img src="./images/active5.png" alt="" class="product-img">
+                                    <p class="product-name">李宁闪击篮球鞋驭帅10镭射队尚4男韦德之道空袭中高帮队尚3.5球鞋</p>
+                                    <p class="product-price">
+                                        <span>￥888.88</span>
+                                        <del>￥999.99</del>
+                                    </p>
+                                    <button type="button" class="mui-btn mui-btn-primary product-buy">立即购买</button>
+                                </div>
+                            </div>
+                            <div class="mui-col-xs-6">
+                                <div class="product">
+                                    <img src="./images/active5.png" alt="" class="product-img">
+                                    <p class="product-name">李宁闪击篮球鞋驭帅10镭射队尚4男韦德之道空袭中高帮队尚3.5球鞋</p>
+                                    <p class="product-price">
+                                        <span>￥888.88</span>
+                                        <del>￥999.99</del>
+                                    </p>
+                                    <button type="button" class="mui-btn mui-btn-primary product-buy">立即购买</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
-        <!-- 在main里面创建一个遮罩层 把main里面所有内容遮住 -->
-        <div class="mask">
-            <div class="loader">
-                <div class="face">
-                    <div class="circle"></div>
-                </div>
-                <div class="face">
-                    <div class="circle"></div>
-                </div>
-            </div>
-        </div>
+
     </main>
-    <!-- 底部区域 -->
+    <!-- 公共的底部区域 -->
     <footer id="footer">
+        <!-- mui的栅格和bootstrap一样也是行和列组成 一行最多12列 只有2中屏幕 xs  和 sm  行不需要放容器
+            列 必须放行里面 -->
         <div class="mui-row">
-            <!-- .mui-col-xs-3*4>a[href="index.html"]>i.fa.fa-home+span{首页} -->
-            <div class="mui-col-xs-3"><a href="index.html" class="active"><i class="fa fa-home"></i><span>首页</span></a></div>
-            <div class="mui-col-xs-3"><a href="category.html"><i class="fa fa-bars"></i><span>分类</span></a></div>
-            <div class="mui-col-xs-3"><a href="cart.html"><i class="fa fa-shopping-cart"></i><span>购物车</span></a></div>
-            <div class="mui-col-xs-3"><a href="user.html"><i class="fa fa-user"></i><span>个人中心</span></a></div>
+            <div class="mui-col-xs-3">
+                <a href="index.html">
+                    <i class="fa fa-home"></i>
+                    <span>首页</span>
+                </a>
+            </div>
+            <div class="mui-col-xs-3">
+                <a href="category.html">
+                    <i class="fa fa-bars"></i>
+                    <span>分类</span>
+                </a>
+            </div>
+            <div class="mui-col-xs-3">
+                <a href="cart.html">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>购物车</span>
+                </a>
+            </div>
+            <div class="mui-col-xs-3">
+                <a href="user.html">
+                    <i class="fa fa-user"></i>
+                    <span>个人中心</span>
+                </a>
+            </div>
         </div>
     </footer>
-    <!-- 创建商品列表的模板 -->
-    <script id="productListTpl" type="text/html">
+    <!-- 创建一个商品列表的模板 -->
+    <script id="productlistTpl" type="text/html">
+        <!-- 后台返回的数据里面有一个数组叫data  {data:[]} 这种格式的数据 -->
         {{each data value}}
-            <div class="mui-col-xs-6">
-                <!-- 商品容器 -->
-                <div class="product">
-                    <!-- value是当前商品对象 value.pic商品的所有图片数组 
-                    value.pic[0]图片数组的第一个图片对象picAddr图片对象图片地址  -->
-                    <img src="{{value.pic[0].picAddr}}" alt="" class="product-img">
-                    <p class="product-name">
-                        {{value.proName}}
-                    </p>
-                    <p class="product-price">
-                        <span>￥{{value.price}}</span>
-                        <del>￥{{value.oldPrice}}</del>
-                    </p>
-                    <!-- 注意立即购买按钮不能使用a跳转
-                    因为MUI在下拉上拉里面阻止了a默认跳转 只能使用tap事件跳转 -->
-                    <button type="button" data-id="{{value.id}}" class="mui-btn mui-btn-primary product-buy">立即购买{{value.num}}</button>
-                </div>
-            </div>   
-        {{/each}}     
+        <div class="mui-col-xs-6">
+            <div class="product">
+                <!-- value 整个商品对象 pic是整个商品所有图片数组 
+                    pic[0]第一个图片对象  pic[0].picAdd 第一个图片对象的图片地址 -->
+                <img src="{{value.pic[0].picAddr}}" alt="" class="product-img">
+                <p class="product-name">{{value.proName}}</p>
+                <p class="product-price">
+                    <span>￥{{value.price}}</span>
+                    <del>￥{{value.oldPrice}}</del>
+                </p>
+                <button type="button" class="mui-btn mui-btn-primary product-buy" data-id="{{value.id}}">立即购买 {{value.num}}</button>
+            </div>
+        </div>
+        {{/each}}
     </script>
-
-    <!-- 1. 引入MUI的js文件 -->
+    <!-- 1. MUI和bootstrap一样 还有JS功能 引入mui.js  但是mui不依赖jquery-->
     <script src="./lib/mui/js/mui.js"></script>
-    <!-- 2. 引入zepto 获取元素 发送请求 和jq一样的功能适用移动端-->
+    <!-- 2. 引入zepto 帮助我们获取元素和ajax请求 -->
     <script src="./lib/zepto/zepto.min.js"></script>
-    <!-- 3. 有请求使用到模板 引入模板引擎 template-web.js-->
+    <!-- 3. 引入模板引擎的js artTemplate-web最新版-->
     <script src="./lib/artTemplate/template-web.js"></script>
-    <!-- 4. 引入swiper的js -->
-    <script src="./lib/swiper/js/swiper.js"></script>
-    <!-- 引入一个公共的js common.js 这里是一些公共的逻辑代码 -->
-    <script src="js/common.js"></script>
-    <!-- 5. 引入自己的js -->
+    <!-- 4. 引入自己的js文件 -->
     <script src="./js/productlist.js"></script>
 </body>
 

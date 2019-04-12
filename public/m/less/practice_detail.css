@@ -120,3 +120,29 @@ img {
 #footer .mui-row > div a span {
   display: block;
 }
+#main .mui-table-view-cell > .mui-btn {
+  position: static;
+  top: 0;
+  transform: none;
+  margin-bottom: .05rem;
+}
+#footer {
+  background-color: #ccc;
+}
+#footer .mui-col-xs-2 a {
+  font-size: .2rem;
+}
+#footer .mui-col-xs-2 a i {
+  color: #666;
+  font-size: .2rem;
+}
+#footer .mui-col-xs-5 {
+  padding: .06rem;
+}
+#footer .mui-col-xs-5 button {
+  width: 100%;
+}
+/* 弹出框的样式 */
+.mui-popup-text {
+  line-height: .3rem;
+}

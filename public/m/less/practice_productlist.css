@@ -120,3 +120,34 @@ img {
 #footer .mui-row > div a span {
   display: block;
 }
+#main .product-list .mui-card-header a {
+  color: #666;
+  font-size: .14rem;
+}
+#main .product-list .mui-card-header a.active {
+  color: red;
+}
+#main .product-list .mui-card-content .mui-row > div:nth-child(odd) {
+  padding-right: .05rem;
+}
+#main .product-list .mui-card-content .mui-row > div:nth-child(even) {
+  padding-left: .05rem;
+}
+#main .product-list .mui-card-content .mui-row > div .product {
+  border: 1px solid #ccc;
+  text-align: center;
+  margin-top: .1rem;
+  padding-bottom: .1rem;
+}
+#main .product-list .mui-card-content .mui-row > div .product .product-img {
+  width: 100%;
+}
+#main .product-list .mui-card-content .mui-row > div .product .product-name {
+  line-height: .18rem;
+}
+#main .product-list .mui-card-content .mui-row > div .product .product-price span {
+  color: red;
+}
+#main .product-list .mui-card-content .mui-row > div .product .product-price del {
+  color: #ccc;
+}

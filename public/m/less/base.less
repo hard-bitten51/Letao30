@@ -130,7 +130,7 @@ body {
     // 区域滚动的父容器
     .mui-scroll-wrapper {
         // 默认设置了绝对定位所以飘了
-        // 2. 给自己 区域滚动父容器设置相对定位 但是默认没有高度 设置成父元素一样高
+        // 2. 给自己 区域滚动父容器设置相对定位 但是默认没有高度 设置成父元素一样高 （推荐使用第二张方式在哪里滚动都通用的）
         // position: absolute;
         position: relative;
         // 手动设置高度和父元素一样
@@ -139,6 +139,33 @@ body {
         // .mui-scroll{
 
         // }
+    }
+
+    /* 搜索表单的公共样式 */
+    .search-form {
+        display: flex;
+        padding: .1rem;
+        height: .54rem;
+
+        input {
+            flex: 1;
+            height: .34rem;
+            border: 1px solid @main-color;
+            background-color: #fff;
+            text-align: left;
+            font-size: .14rem;
+            border-radius: .06rem 0px 0px .06rem;
+            margin-bottom: 0;
+        }
+
+        button {
+            width: .6rem;
+            height: .34rem;
+            border-radius: 0 .06rem .06rem 0px;
+            background-color: @main-color;
+            border-color: @main-color;
+            border-left: 0;
+        }
     }
 }
 

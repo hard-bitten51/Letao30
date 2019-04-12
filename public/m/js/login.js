@@ -1,39 +1,30 @@
 $(function () {
-    // 记得写完函数马上调用 只是为取分功能 调用登录函数
+    // 调用登录功能函数
     login();
-    // 1. 登录功能的函数
+    // 定义一个登录功能的函数
     function login() {
-        /* 1. 点击登录按钮实现登录
-        2. 获取当前用户输入的用户名和密码
-        3. 进行非空验证
-        4. 调用后台提供的登录接口 并且传人当前的用户名和密码
-        5. 获取后台返回登录信息是成功还是失败  失败就提示用户重新输入 
-        6. 如果成功获取当前url 跳转回到这个地址 */
-        console.log( mui('.btn-login'));
-        // 1. 给登录按钮添加点击事件
+        // 1. 点击登录给登录按钮添加点击事件
         $('.btn-login').on('tap', function () {
-            // 2. 获取当前用户输入用户名和密码 去掉首尾空格
+            // 2. 获取当前用户输入的用户名
             var username = $('.username').val().trim();
-            // 3. 判断当前用户名是否输入
-            if (username == '') {
+            // 判断用户名为空 username为空 一定为false  !false == true
+            if (!username) {
                 mui.toast('请输入用户名', {
-                    duration: 'long',
+                    duration: 'short',
                     type: 'div'
                 });
-                // 推荐return false 后面代码包括默认行为都不会执行
-                return false;
+                return;
             }
-            // 4. 获取当前用户输入的密码 去掉首尾空格
+            // 3. 获取当前输入的密码
             var password = $('.password').val().trim();
-            if (password == '') {
+            if (!password) {
                 mui.toast('请输入密码', {
-                    duration: 'long',
+                    duration: 'short',
                     type: 'div'
                 });
-                // 推荐return false 后面代码包括默认行为都不会执行
-                return false;
+                return;
             }
-            // 5. 调用API登录 传人用户名和密码
+            // 4. 调用登录API实现登录功能
             $.ajax({
                 url: '/user/login',
                 type: 'post',
@@ -43,20 +34,33 @@ $(function () {
                 },
                 success: function (data) {
                     console.log(data);
-                    // 6. 判断登录是否失败
+                    // 5. 如果返回有错表示用户名或者密码错误提示一下
                     if (data.error) {
-                        // 7. 把错误信息提示给用户
                         mui.toast(data.message, {
-                            duration: 'long',
+                            duration: 'short',
                             type: 'div'
                         });
                     } else {
-                        // 8. 如果没有错表示成功 成功跳转到当前returnurl里面的地址
-                        location = getQueryString('returnurl');
+                        // 6. 如果没有错表示登录成功 获取当前要返回的页面url 通过地址栏参数去获取要返回的url
+                        // 6.1 先获取当前要返回的url地址
+                        var returnUrl = getQueryString('returnUrl');
+                        console.log(returnUrl);
+                        // 6.2 跳转回到这个地址 (不使用location跳转是无法回去 使用location去跳转)
+                        location = returnUrl;
                     }
                 }
             })
         });
     }
-    
-})
+    // 使用正则匹配url参数 返回这个匹配成功的值 根据参数名获取参数的值
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            console.log(r);
+            // 别人之前使用unescape 方式解密  但是我们默认是encodeURI加密 使用 decodeURI 解密
+            return decodeURI(r[2]);
+        }
+        return null;
+    }
+});
